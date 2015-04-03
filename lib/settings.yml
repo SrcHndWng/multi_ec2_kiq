@@ -1,0 +1,13 @@
+aws:
+  profile: your_aws_credencial_profile
+  dynamodb:
+    region: your_dynamodb_region
+    status_table_name: your_ec2_statuses_table_mmae
+wait_to_stop:
+  max_attempts: 10 #retry times until you command "to_stop"
+  delay: 10 #retry interval(s) until you command "to_stop"
+instances:
+  - id: your_ec2_instance_id_1
+    region: your_ec2_instance_id_1_region
+  - id: your_ec2_instance_id_2
+    region: your_ec2_instance_id_2_region
