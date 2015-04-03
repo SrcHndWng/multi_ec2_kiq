@@ -10,8 +10,13 @@ describe Dynamodb do
     @dynamodb = Dynamodb.new
   end
 
+  it 'should create statud table.' do
+    expect(@dynamodb).to receive(:create_table).with(anything, anything)
+    result = @dynamodb.create_status_table
+    expect(result).to eq(true)
+  end
+
   it 'should write started.' do
-    expect(@dynamodb).to receive(:create_table_if_not_exists)
     expect(@dynamodb).to receive(:put_item).with(anything, anything)
     result = @dynamodb.started("instance_test")
     expect(result).to eq(true)

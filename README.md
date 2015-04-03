@@ -33,11 +33,17 @@ Or install it yourself as:
 
 ## Usage
 
-1. You have to set aws profile in your ~/.aws/credentials.
-
-2. Write configuration yml file, use "lib/settings.yml" as a reference.
-
-3. Then, call methods.
+You have to set aws profile in your ~/.aws/credentials.  
+  
+Write configuration yml file, use "lib/settings.yml" as a reference.  
+  
+To create ec2-status-table on DynamoDB, you have to call Dynamodb::create_status_table method from rails console, ruby source, e.t.c.
+```ruby
+    dynamodb = Dynamodb.new
+    dynamodb.create_status_table
+```
+  
+Then, call methods.
 ```ruby
     require "multi_ec2_kiq"
 
@@ -46,7 +52,7 @@ Or install it yourself as:
     MultiEc2Kiq.config_path = File.expand_path("your configuration file path", __FILE__)
     MultiEc2Kiq.start
 ```
-
+  
 ```ruby
     require "multi_ec2_kiq"
 

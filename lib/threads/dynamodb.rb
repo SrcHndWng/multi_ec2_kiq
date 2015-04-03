@@ -9,7 +9,6 @@ module MultiEc2Kiq
     end
 
     def started(instance_id)
-      create_table_if_not_exists
       put_item(instance_id, @STATUS.started)
       true
     end
@@ -30,31 +29,7 @@ module MultiEc2Kiq
       true
     end
 
-    private
-
-    def raise_not_exist
-      raise "instance_id doesn't exist on status table."
-    end
-
-    def get_item(instance_id)
-      dynamodb.get_item(
-        table_name: Settings.aws.dynamodb.status_table_name,
-        key: {instance_id: instance_id}
-      )
-    end
-
-    def put_item(instance_id, status)
-      dynamodb.put_item(
-        table_name: Settings.aws.dynamodb.status_table_name,
-        item: {instance_id: instance_id, status: status}
-      )
-    end
-
-    def create_table_if_not_exists
-      dynamodb.list_tables.table_names.each {|table|
-        return if table == Settings.aws.dynamodb.status_table_name
-      }
-
+    def create_status_table
       options = {
         table_name: Settings.aws.dynamodb.status_table_name,
         key_schema: [
@@ -75,12 +50,38 @@ module MultiEc2Kiq
         }
       }
 
+      create_table(options, Settings.aws.dynamodb.status_table_name)
+
+      true
+    end
+
+    private
+
+    def create_table(options, table_name)
       dynamodb.create_table(options)
 
-      dynamodb.wait_until(:table_exists, {table_name: Settings.aws.dynamodb.status_table_name}) do |w|
+      dynamodb.wait_until(:table_exists, {table_name: table_name}) do |w|
         w.max_attempts = 5
         w.delay = 5
       end
+    end
+
+    def raise_not_exist
+      raise "instance_id doesn't exist on status table."
+    end
+
+    def get_item(instance_id)
+      dynamodb.get_item(
+        table_name: Settings.aws.dynamodb.status_table_name,
+        key: {instance_id: instance_id}
+      )
+    end
+
+    def put_item(instance_id, status)
+      dynamodb.put_item(
+        table_name: Settings.aws.dynamodb.status_table_name,
+        item: {instance_id: instance_id, status: status}
+      )
     end
 
     def dynamodb
