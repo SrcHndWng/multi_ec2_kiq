@@ -39,6 +39,8 @@ Or install it yourself as:
 
 3. Then, call methods.
 ```ruby
+    require "multi_ec2_kiq"
+
     include MultiEc2Kiq
 
     MultiEc2Kiq.config_path = File.expand_path("your configuration file path", __FILE__)
@@ -46,6 +48,8 @@ Or install it yourself as:
 ```
 
 ```ruby
+    require "multi_ec2_kiq"
+
     include MultiEc2Kiq
 
     MultiEc2Kiq.config_path = File.expand_path("your configuration file path", __FILE__)
