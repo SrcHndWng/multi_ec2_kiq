@@ -37,10 +37,13 @@ You have to set aws profile in your ~/.aws/credentials.
   
 Write configuration yml file, use "lib/settings.yml" as a reference.  
   
-To create ec2-status-table on DynamoDB, you have to call Dynamodb::create_status_table method from rails console, ruby source, e.t.c.
+To create ec2-status-table on DynamoDB, you have to call create_status_table method from rails console, ruby source, e.t.c.
 ```ruby
-    dynamodb = Dynamodb.new
-    dynamodb.create_status_table
+    require "multi_ec2_kiq"
+
+    include MultiEc2Kiq
+
+    MultiEc2Kiq.create_status_table
 ```
   
 Then, call methods.

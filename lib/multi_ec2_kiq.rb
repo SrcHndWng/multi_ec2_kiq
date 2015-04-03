@@ -22,6 +22,11 @@ module MultiEc2Kiq
     true
   end
 
+  def create_status_table
+    Settings.source(config_path)
+    Dynamodb.new.create_status_table
+  end
+
   def start_wait_until_stop
     Settings.source(config_path)
     instances = Settings.instances
