@@ -43,6 +43,7 @@ To create ec2-status-table on DynamoDB, you have to call create_status_table met
 
     include MultiEc2Kiq
 
+    MultiEc2Kiq.config_path = File.expand_path("your configuration file path", __FILE__)
     MultiEc2Kiq.create_status_table
 ```
   
